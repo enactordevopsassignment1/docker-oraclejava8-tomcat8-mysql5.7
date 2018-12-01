@@ -1,1 +1,1 @@
-mysql -u$MYSQL_USER -p$MYSQL_PASS -e 'CREATE DATABASE simple_db CHARACTER SET UTF8'
+mysql -u$MYSQL_USER -p$MYSQL_PASS -e 'SOURCE /simple_db.sql'

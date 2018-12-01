@@ -26,16 +26,17 @@ If you want to expose also the mysql, do:
 docker run --name TomcatServerOrWhatever -d -p 8080:8080 -p 3306:3306 your-login/your-new-image
 ```
 
-Copy the WAR file representing your application to `/opt/apache-tomcat-8.0.50/webapps/` folder:
-
+War file that need to be deployed should be given as a build argument. 
+That file should reside in the same directory as the Dockerfile. 
+Here it will be added/copied to TOMCAT_HOME/webapps directory at the build.
 ```shell
-docker exec TomcatServerOrWhatever cp yourapp.war /opt/apache-tomcat-8.0.50/webapps/yourapp.war
+ docker build --build-arg web_app_war_file=simple_web_app.war -t simple_web_app_container .
 ```
-or set in the root:
 
-```shell
-docker exec TomcatServerOrWhatever cp ROOT.war /opt/apache-tomcat-8.0.50/webapps/ROOT.war
-```
+Table creation of 'simple_db' is done at the mysql-setup.sh.
+The table creation 'simple_db.sql' script should be there in the directory as the Dockerfile at the build phase, 
+so that it get added/copied into the container. 
+
 
 (this will overwrite the tomcat manager, so use it wisely)
 
@@ -43,7 +44,7 @@ That's all folks!
 
 ## Characteristics of this image
 
- - Ubuntu - latest
+ - Ubuntu 16.04
  - Oracle Java 8
  - MySQL 5.7
  - Tomcat 8.0.50
@@ -71,15 +72,3 @@ Please remember to change the above password as soon as possible!
 MySQL user 'root' has no password but only allows local connections
 ========================================================================
 ```
-
-In this case, `47nnf4FweaKu` is the password allocated to the `defaultUser` user.
-
-You can then connect to MySQL:
-
-```shell
-mysql -udefaultUser -p47nnf4FweaKu
-```
-
-Remember that the `root` user does not allow connections from outside the container -
-you should use this `defaultUser` user instead!
-

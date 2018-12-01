@@ -42,6 +42,7 @@ RUN rm -rf /var/lib/mysql/*
 # Add MySQL utils
 ADD create_mysql_user.sh /create_mysql_admin_user.sh
 ADD mysql-setup.sh /mysql-setup.sh
+ADD simple_db.sql /simple_db.sql
 RUN chmod 755 /*.sh
 
 # Add war file at the build phase.
