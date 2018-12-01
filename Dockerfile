@@ -1,10 +1,10 @@
-FROM ubuntu:latest
+FROM ubuntu:16.04
 
-LABEL Caio Cascaes <caio.cascaes@gmail.com>
+LABEL Thilina.Madumal=<madumalt@gmail.com> Caio.Cascaes=<caio.cascaes@gmail.com>
 
 ENV DEBIAN_FRONTEND noninteractive
 ENV TOMCAT_MAJOR_VERSION=8
-ENV TOMCAT_VERSION=8.0.50
+ENV TOMCAT_VERSION=8.5.35
 ENV TOMCAT_HOME=/opt/apache-tomcat-$TOMCAT_VERSION
 
 # Install Java 8
@@ -40,9 +40,14 @@ ADD supervisord-mysqld.conf /etc/supervisor/conf.d/supervisord-mysqld.conf
 RUN rm -rf /var/lib/mysql/*
 
 # Add MySQL utils
-ADD create_mysql_admin_user.sh /create_mysql_admin_user.sh
+ADD create_mysql_user.sh /create_mysql_admin_user.sh
 ADD mysql-setup.sh /mysql-setup.sh
 RUN chmod 755 /*.sh
+
+# Add war file at the build phase.
+# Should pass the location of war file as a build-arg.
+ARG web_app_war_file
+ADD $web_app_war_file $TOMCAT_HOME/webapps/simple_web_app.war
 
 WORKDIR $TOMCAT_HOME
 
