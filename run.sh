@@ -7,7 +7,7 @@ if [[ ! -d $VOLUME_HOME/mysql ]]; then
     echo "=> Installing MySQL ..."
     mysqld --initialize-insecure --user=mysql > /dev/null 2>&1
     echo "=> Done!"  
-    /create_mysql_admin_user.sh
+    /create_mysql_user.sh
 else
     echo "=> Using an existing volume of MySQL"
 fi

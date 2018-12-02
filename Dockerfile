@@ -40,7 +40,7 @@ ADD supervisord-mysqld.conf /etc/supervisor/conf.d/supervisord-mysqld.conf
 RUN rm -rf /var/lib/mysql/*
 
 # Add MySQL utils
-ADD create_mysql_user.sh /create_mysql_admin_user.sh
+ADD create_mysql_user.sh /create_mysql_user.sh
 ADD mysql-setup.sh /mysql-setup.sh
 ADD simple_db.sql /simple_db.sql
 RUN chmod 755 /*.sh
